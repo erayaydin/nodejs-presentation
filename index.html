@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NodeJS - ExpressJS ve Socket.io</title>
+    <link rel="stylesheet" href="assets/vendor/reveal/css/reveal.css">
+    <link rel="stylesheet" href="assets/vendor/reveal/css/theme/black.css">
+    <link rel="stylesheet" href="assets/vendor/reveal/css/zenburn.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>NODEJS</h1>
+            <p>ExpressJS ve Socket.io</p>
+            <img src="assets/images/allonsy.gif">
+        </section>
+        <section>
+            <h3>NODEJS NEDİR?</h3>
+            <p><b>Yüksek performanslı</b> ve <b>ölçeklenebilir</b> ağ programlarını yazmanızı kolaylaştıran bir Javascript çalıştırma ortamıdır.</p>
+        </section>
+        <section>
+            <h3>ÖZELLİKLERİ</h3>
+            <ul>
+                <li>Google'ın V8 Javascript Motoru</li>
+                <li>NPM Paket Yöneticisi</li>
+                <li>Olay Bazlı Yapı Oluşturma</li>
+                <li>Asenkron I/O İşlemleri</li>
+            </ul>
+        </section>
+        <section>
+            <h3>AVANTAJLARI</h3>
+            <ul>
+                <li>Asenkron Olay Bazlı</li>
+                <li>Client-side'da ve Server-side'da Aynı Kodu Kullanabilme</li>
+                <li>Aktif Bir Topluluk</li>
+                <li>Büyük Boyutlu Dosyaları Yayınlayabilme</li>
+            </ul>
+        </section>
+        <section>
+            <h3>NELER YAPILABİLİR?</h3>
+            <ul>
+                <li>Sohbet Sistemi</li>
+                <li>HTTP Sunucu</li>
+                <li>FTP Sunucu</li>
+                <li>DNS Sunucu</li>
+                <li>Veri Yayınlama</li>
+                <li>Reklam Sunucusu</li>
+                <li>Gerçek Zamanlı Sosyal Platform</li>
+                <li>Stok Takip Yazılımları</li>
+            </ul>
+        </section>
+        <section>
+            <h3>NEDİR BU ASENKRON?</h3>
+            <p>Okuma ve yazma işlemlerinin işletim sistemi yardımıyla ayrı bir kuyruğa alınmasıdır.<br><br>Kısaca, kodlarımız çalışırken disk yüzünden oluşan beklemelerden kurtulmamıza olanak sağlar.</p>
+        </section>
+        <section>
+            <h3>TEK SENKRON İŞLEM</h3>
+            <p>
+                <img src="assets/images/sync1.png" />
+            </p>
+        </section>
+        <section>
+            <h3>ÇOKLU SENKRON İŞLEM</h3>
+            <p>
+                <img src="assets/images/sync2.png" />
+            </p>
+        </section>
+        <section>
+            <h3>ÇOKLU ASENKRON İŞLEM</h3>
+            <p>
+                <img src="assets/images/async1.png" />
+            </p>
+        </section>
+        <section>
+            <h3>NODEJS ASENKRON İŞLEM ÖRNEĞİ</h3>
+            <pre><code class="hljs javascript">const fs = require('fs')
+
+console.log('Dosyayı okumaya başla!')
+
+fs.readFile('deneme.txt', 'utf-8', function(err, content) {
+  if(err) {
+    console.log('Dosya okunurken bir hata oluştu!')
+  } else {
+    console.log(content)
+  }
+})
+
+console.log('Dosya okuma bitti!')</code></pre>
+            <pre><code class="bash">Dosyayı okumaya başla!
+Dosya okuma bitti!
+ANKARAPHP</code></pre>
+        </section>
+        <section>
+            <h3>EXPRESSJS</h3>
+            <p>NodeJS tabanlı asenkron web framework</p>
+            <pre><code class="hljs javascript" data-trim>
+                var express = require('express')
+                var app = express()
+
+                app.get('/', function(req, res){
+                    res.send('Merhaba Express')
+                })
+
+                app.listen(3000, function(){
+                    console.log('Express sunucusu 3000 portunda çalışıyor!')
+                })
+            </code></pre>
+        </section>
+        <section>
+            <h3>PUG (ESKİ ADIYLA JADE)</h3>
+            <p>Kolay bir şekilde HTML sayfaları hazırlamanızı ve template engine avantajlarından yararlanmanızı sağlar.</p>
+            <pre><code class="hljs javascript">
+app.set('view engine', 'pug')
+            </code></pre>
+        </section>
+        <section>
+            <pre><code class="hljs javascript" data-trim>
+html
+  head
+    title= title
+  body
+    h1.ankara#konya PHP
+        span(style='color: red;') NodeJS
+            </code></pre>
+            <pre><code class="hljs html" data-trim>
+&lt;html&gt;
+    &lt;head&gt;
+        <title>Merhaba</title>
+    &lt;/head&gt;
+    &lt;body&gt;
+        <h1 class="ankara" id="konya">
+            PHP
+            <span style="color: red;">NodeJS</span>
+        </h1>
+    &lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+        </section>
+        <section>
+            <h3>SOCKET.IO</h3>
+            <p>Gerçek zamanlı olarak Sunucu-İstemci arasında iki yönlü iletişim kurmanızı sağlar.</p>
+        </section>
+        <section>
+            <h3>KİMLER KULLANIYOR?</h3>
+            <ul>
+                <li>Microsoft Office</li>
+                <li>Trello</li>
+                <li>Zendesk</li>
+                <li>Yammer</li>
+            </ul>
+        </section>
+        <section>
+            <h3>MERHABA SOCKET</h3>
+            <pre><code class="hljs javascript" data-trim>
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', function(socket){
+  console.log('Yeni bir istemci baglandi!');
+});
+
+http.listen(3000);
+</code></pre>
+            <pre><code class="hljs html" data-trim>
+&lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  var socket = io();
+&lt;/script&gt;
+            </code></pre>
+        </section>
+        <section>
+            <h3>GÜLE GÜLE SOCKET</h3>
+            <pre><code class="hljs javascript" data-trim>
+io.on('connection', function(socket){
+  console.log('Yeni bir istemci baglandi!');
+  socket.on('disconnect', function(){
+    console.log('istemci bizi terketti :(');
+  });
+});
+</code></pre>
+        </section>
+        <section>
+            <h3>BİRAZ KONUŞALIM MI?</h3>
+            <pre><code class="hljs javascript" data-trim>
+io.on('connection', function(socket){
+  console.log('Yeni bir istemci baglandi!');
+  socket.on('konusalim', function(msg){
+    console.log('istemciden gelen: ' + msg);
+  });
+  socket.on('disconnect', function(){
+    console.log('istemci bizi terketti :(');
+  });
+});
+</code></pre>
+            <pre><code class="hljs html" data-trim>
+&lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  var socket = io();
+  socket.emit('konusalim', "Selam sana demir ayak");
+&lt;/script&gt;
+</code></pre>
+            <pre><code class="hljs bash" data-trim>
+Yeni bir istemci baglandi!
+istemciden gelen: Selam sana demir ayak
+            </code></pre>
+        </section>
+        <section>
+            <h3>BİZİM DE SÖZ HAKKIMIZ VAR!</h3>
+            <pre><code class="hljs javascript" data-trim>
+// server.js
+io.on('connection', function(socket){
+    socket.emit('ben de konusucam', {
+        mesaj: 'Merhaba kartal gözü'
+    });
+});
+</code></pre>
+            <pre><code class="hljs javascript" data-trim>
+// index.html
+socket.on('ben de konusucam', function (cevap) {
+    console.log('SUNUCU:', cevap.mesaj)
+});
+</code></pre>
+        </section>
+        <section>
+            <h3>HERKESE BAĞIRALIM</h3>
+            <pre><code class="hljs javascript" data-trim>
+// server.js
+io.on('connection', function(socket){
+  socket.broadcast.emit('alo', {
+    mesaj: 'Kayalara geldik'
+  });
+});
+</code></pre>
+            <pre><code class="hljs javascript" data-trim>
+// index.html
+socket.on('alo', function (cevap) {
+    console.log('SUNUCU:', cevap.mesaj)
+});
+</code></pre>
+        </section>
+        <section>
+            <h3>SOHBET ÖRNEĞİ - MERHABA</h3>
+            <img src="assets/images/socket1.png">
+        </section>
+        <section>
+            <h3>SOHBET ÖRNEĞİ - YENİ MESAJ</h3>
+            <img src="assets/images/socket2.png">
+        </section>
+        <section>
+            <h3>NERELERDE KULLANILABİLİR?</h3>
+            <ul>
+                <li>Sohbet</li>
+                <li>HTML5 İnteraktif Oyunlar</li>
+                <li>AR & VR</li>
+                <li>Müzik & Radyo Yayını</li>
+                <li>Online IDE (c9)</li>
+            </ul>
+        </section>
+        <section>
+            <p><img src="assets/images/holyjs.png"></p>
+            <h3>HOLYJS</h3>
+            <p>NodeJS Server Project Starter</p>
+            <p><a href="https://github.com/holyjs/holyjs">github.com/holyjs/holyjs</a></p>
+        </section>
+        <section>
+            <h3>HOLYJS ÖZELLİKLERİ</h3>
+            <ul>
+                <li>Sosyal Auth (Twitter, Facebook, Google, Github, Instagram...)</li>
+                <li>MVC Yapısı</li>
+                <li>MongoDB</li>
+                <li>DotEnv (.env)</li>
+                <li>CSRF</li>
+                <li>Yeoman Generator</li>
+                <li>Socket.io</li>
+                <li>Test Framework (mocha)</li>
+            </ul>
+        </section>
+        <section>
+            <h3>DİNLEDİĞİNİZ İÇİN TEŞEKKÜRLER</h3>
+            <img src="assets/images/bye.gif">
+        </section>
+    </div>
+</div>
+<script src="assets/vendor/reveal/js/head.min.js"></script>
+<script src="assets/vendor/reveal/js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        dependencies: [
+            { src: 'assets/vendor/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+    });
+</script>
+</body>
+</html>
